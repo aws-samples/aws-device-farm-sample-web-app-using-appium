@@ -26,10 +26,13 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * An abstract base for all of the Android tests within this package
- *
- * Responsible for setting up the Appium test Driver
+ * responsible for setting up the Appium test Driver
  */
 public abstract class TestBase {
+
+    private final String URL_STRING = "http://127.0.0.1:4723/wd/hub";
+    private final int TIMEOUT = 30;
+
     /**
      * Make the driver static. This allows it to be created only once
      * and used across all of the test classes.
@@ -51,26 +54,21 @@ public abstract class TestBase {
     @BeforeSuite
     public void setUpAppium() throws MalformedURLException{
 
-        final String URL_STRING = "http://127.0.0.1:4723/wd/hub";
         URL url = new URL(URL_STRING);
 
 	/*
 	 * As mentioned in the documentation above we should not set the capabilities when 
-	 * running on Device Farm's server. It can have unexpected results
-	  
-	DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-	capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "4.4");
-	capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
-	*/
+	 * running on Device Farm's server. The settings made here will be ignored or may have
+	 * unexpected results.
+	 */
         driver = new AndroidDriver<MobileElement>(url, new DesiredCapabilities());
 
-        //Use a higher value if your mobile elements take time to show up
-        driver.manage().timeouts().implicitlyWait(35, TimeUnit.SECONDS);
+        //Use a higher value if your mobile elements take time to show up.
+        driver.manage().timeouts().implicitlyWait(TIMEOUT, TimeUnit.SECONDS);
     }
 
     /**
-     * Always remember to quit
+     * Always remember to quit.
      */
     @AfterSuite
     public void tearDownAppium(){
@@ -81,7 +79,7 @@ public abstract class TestBase {
 
     /**
      * Restart the app after every test class to go back to the main
-     * screen and to reset the behavior
+     * screen and to reset the behavior.
      */
     @AfterClass
     public void restartApp() {

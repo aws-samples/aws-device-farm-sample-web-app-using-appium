@@ -22,7 +22,7 @@ import org.openqa.selenium.OutputType;
 import org.testng.annotations.Test;
 
 /**
- * Test 
+ * Test.
  */
 public class ScreenshotTest extends TestBase {
 
@@ -31,10 +31,9 @@ public class ScreenshotTest extends TestBase {
     @Test
     public void testScreenshot() throws InterruptedException {
 
-        Thread.sleep(5000);
-    	driver.get(TEST_URL);
-        Thread.sleep(5000);
-        
+	Thread.sleep(5000);
+	drive.get(TEST_URL);
+	Thread.sleep(5000);
 	// This will store the screenshot under /tmp on your local machine
 	String screenshotDir = System.getProperty("appium.screenshot.dir", System.getProperty("java.io.tmpdir", ""));
 	File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
